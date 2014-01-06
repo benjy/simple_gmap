@@ -1,0 +1,44 @@
+{#
+/**
+ * @file
+ * Displays the Simple Google Maps formatter.
+ *
+ * Available variables:
+ * - include_map: TRUE if an embedded map should be displayed.
+ * - include_static_map: TRUE if an embedded static map should be displayed.
+ * - width: Width of dynamic map.
+ * - height: Height of dynamic map.
+ * - static_w: Width of static map.
+ * - static_h: Height of static map.
+ * - include_link: TRUE if a link to a map should be displayed.
+ * - link_text: Text of link to display.
+ * - url_suffix: Suffix of URLs to send to Google Maps for embedded and linked
+ *   maps. Contains the URL-encoded address.
+ * - zoom: Zoom level for embedded and linked maps.
+ * - information_bubble: TRUE if an information bubble should be displayed on
+ *   maps. Note that in the Google Maps URLs, you need to send iwloc=A to use
+ *   a bubble, and iwloc=near to omit the bubble.
+ * - address_text: Address text to display (empty if it should not be
+ *   displayed).
+ * - map_type: Type of map to use (Google code, such as 'm' or 't').
+ * - langcode: Two-letter language code to use.
+ * - static_map_type: Type of map to use for static map (Google code, such as
+ *  'roadmap' or 'satellite')
+ *
+ * @ingroup themeable
+ */
+#}
+{% if include_map %}
+  <iframe width="{{ width }}" height="{{ height }}" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?hl={{ langcode }}&amp;q={{ url_suffix }}&amp;iwloc={{ information_bubble ? 'A' : 'near' }}&amp;t={{ map_type }}&amp;z={{ zoom }}?&amp;output=embed"></iframe>
+{% endif %}
+{% if include_static_map %}
+  <div class="simple-gmap-static-map">
+    <img src="http://maps.googleapis.com/maps/api/staticmap?size={{ static_w }}x{{ static_h }}&amp;zoom={{ zoom }}&amp;language={{ langcode }}&amp;maptype={{ static_map_type }}&amp;markers=color:red|{{ url_suffix }}&amp;sensor=false" />
+  </div>
+{% endif %}
+{% if include_link %}
+  <p class="simple-gmap-link"><a href="https://maps.google.com/maps?q={{ url_suffix }}&amp;hl={{ langcode }}&amp;iwloc={{ information_bubble ? 'A' : 'near' }}&amp;t={{ map_type }}&amp;z={{ zoom }}" target="_blank">{{ link_text }}</a></p>
+{% endif %}
+{% if address_text is not empty %}
+  <p class="simple-gmap-address">{{ address_text }}</p>
+{% endif %}

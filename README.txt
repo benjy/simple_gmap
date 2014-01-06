@@ -2,7 +2,7 @@ Simple Google Maps module
 
 This module is about the simplest way to get a Google Map, or a link to a
 Google Map, displayed with your content. It simply provides a field formatter
-for Drupal 7 text fields. With this formatter, you can enter a single-line
+for Drupal 8 text fields. With this formatter, you can enter a single-line
 address that Google Maps would recognize into a plain text field, such as:
    100 Madison Ave, New York, NY
 And then on your Manage Display screen (or in Views field setup), you can choose
@@ -14,8 +14,7 @@ Google Maps' iframe embedding capability to embed a map at a given address that
 Google Maps can recognize, or to make a link to Google Map.
 
 To install and use:
-- Upload/unzip to your Drupal 7 sites/all/modules directory (or
-  sites/default/modules or whatever).
+- Upload/unzip to your Drupal 8 /modules directory (or /modules/contrib or whatever).
 - Enable the module.
 - Add a plain Text field to your content type. You probably should add some
   Help text to the field to explain that a one-line address that Google Maps can
