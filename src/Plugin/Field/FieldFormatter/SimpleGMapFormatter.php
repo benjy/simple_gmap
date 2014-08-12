@@ -10,6 +10,7 @@ namespace Drupal\simple_gmap\Plugin\Field\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Component\Utility\String;
 
 /**
  * Plugin implementation of the 'simple_gmap' formatter.
@@ -19,23 +20,29 @@ use Drupal\Core\Form\FormStateInterface;
  *   label = @Translation("Google Map from one-line address"),
  *   field_types = {
  *     "text"
- *   },
- *   settings = {
- *     "include_map" = "1",
- *     "include_static_map" = "0",
- *     "include_link" = "0",
- *     "include_text" = "0",
- *     "iframe_height" = "200",
- *     "iframe_width" = "200",
- *     "zoom_level" = "14",
- *     "information_bubble" = "1",
- *     "link_text" = "View larger map",
- *     "map_type" = "m",
- *     "langcode" = "en"
  *   }
  * )
  */
 class SimpleGMapFormatter extends FormatterBase {
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function defaultSettings() {
+    return array(
+      "include_map" => "1",
+     "include_static_map" => "0",
+     "include_link" => "0",
+     "include_text" => "0",
+     "iframe_height" => "200",
+     "iframe_width" => "200",
+     "zoom_level" => "14",
+     "information_bubble" => "1",
+     "link_text" => "View larger map",
+     "map_type" => "m",
+     "langcode" => "en"
+    ) + parent::defaultSettings();
+  }
 
   /**
    * {@inheritdoc}
@@ -177,7 +184,7 @@ class SimpleGMapFormatter extends FormatterBase {
     }
 
     if ($include_link || $include_map || $include_static_map) {
-      $langcode = check_plain($this->getSetting('langcode'));
+      $langcode = String::checkPlain($this->getSetting('langcode'));
       $language = isset($langcode) ? $langcode : 'en';
       $summary[] = t('Map Type: @map_type', array('@map_type' => $map_type));
       $summary[] = t('Zoom Level: @zoom_level', array('@zoom_level' => $this->getSetting('zoom_level')));
@@ -207,13 +214,13 @@ class SimpleGMapFormatter extends FormatterBase {
     $link = (int) $settings['include_link'] ? TRUE : FALSE;
     $text = (int) $settings['include_text'] ? TRUE : FALSE;
 
-    $height = check_plain($settings['iframe_height']);
-    $width = check_plain($settings['iframe_width']);
+    $height = String::checkPlain($settings['iframe_height']);
+    $width = String::checkPlain($settings['iframe_width']);
     if ($static) {
       $static_h = (int) $height;
       $static_w = (int) $width;
     }
-    $link_text = $link ? check_plain($settings['link_text']) : '';
+    $link_text = $link ? String::checkPlain($settings['link_text']) : '';
     $bubble = (int) $settings['information_bubble'] ? TRUE : FALSE;
     $zoom_level = (int) $settings['zoom_level'];
 
@@ -223,15 +230,15 @@ class SimpleGMapFormatter extends FormatterBase {
     $map_type = $settings['map_type'];
 
     // Figure out a language code to use. Google cannot recognize 'und'.
-    $lang_to_use = check_plain($settings['langcode']);
+    $lang_to_use = String::checkPlain($settings['langcode']);
 
     if (!$lang_to_use || $lang_to_use == 'page') {
       $lang_to_use = $items->getLangcode();
     }
 
     foreach ($items as $delta => $item) {
-      $url_value = urlencode(check_plain($item->value));
-      $address_value = check_plain($item->value);
+      $url_value = urlencode(String::checkPlain($item->value));
+      $address_value = String::checkPlain($item->value);
       $address = $text ? $address_value : '';
 
       $element[$delta] = array(
