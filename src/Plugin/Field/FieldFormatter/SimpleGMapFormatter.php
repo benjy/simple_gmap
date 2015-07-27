@@ -10,7 +10,7 @@ namespace Drupal\simple_gmap\Plugin\Field\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Component\Utility\String;
+use Drupal\Component\Utility\SafeMarkup;
 
 /**
  * Plugin implementation of the 'simple_gmap' formatter.
@@ -184,7 +184,7 @@ class SimpleGMapFormatter extends FormatterBase {
     }
 
     if ($include_link || $include_map || $include_static_map) {
-      $langcode = String::checkPlain($this->getSetting('langcode'));
+      $langcode = SafeMarkup::checkPlain($this->getSetting('langcode'));
       $language = isset($langcode) ? $langcode : 'en';
       $summary[] = t('Map Type: @map_type', array('@map_type' => $map_type));
       $summary[] = t('Zoom Level: @zoom_level', array('@zoom_level' => $this->getSetting('zoom_level')));
@@ -214,13 +214,13 @@ class SimpleGMapFormatter extends FormatterBase {
     $link = (int) $settings['include_link'] ? TRUE : FALSE;
     $text = (int) $settings['include_text'] ? TRUE : FALSE;
 
-    $height = String::checkPlain($settings['iframe_height']);
-    $width = String::checkPlain($settings['iframe_width']);
+    $height = SafeMarkup::checkPlain($settings['iframe_height']);
+    $width = SafeMarkup::checkPlain($settings['iframe_width']);
     if ($static) {
       $static_h = (int) $height;
       $static_w = (int) $width;
     }
-    $link_text = $link ? String::checkPlain($settings['link_text']) : '';
+    $link_text = $link ? SafeMarkup::checkPlain($settings['link_text']) : '';
     $bubble = (int) $settings['information_bubble'] ? TRUE : FALSE;
     $zoom_level = (int) $settings['zoom_level'];
 
@@ -230,15 +230,15 @@ class SimpleGMapFormatter extends FormatterBase {
     $map_type = $settings['map_type'];
 
     // Figure out a language code to use. Google cannot recognize 'und'.
-    $lang_to_use = String::checkPlain($settings['langcode']);
+    $lang_to_use = SafeMarkup::checkPlain($settings['langcode']);
 
     if (!$lang_to_use || $lang_to_use == 'page') {
       $lang_to_use = $items->getLangcode();
     }
 
     foreach ($items as $delta => $item) {
-      $url_value = urlencode(String::checkPlain($item->value));
-      $address_value = String::checkPlain($item->value);
+      $url_value = urlencode(SafeMarkup::checkPlain($item->value));
+      $address_value = SafeMarkup::checkPlain($item->value);
       $address = $text ? $address_value : '';
 
       $element[$delta] = array(
