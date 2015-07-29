@@ -52,53 +52,53 @@ class SimpleGMapFormatter extends FormatterBase {
 
     $elements['embedded_label'] = array(
       '#type' => 'markup',
-      '#markup' => '<h3>' . t('Embedded map') . '</h3>',
+      '#markup' => '<h3>' . $this->t('Embedded map') . '</h3>',
     );
     $elements['include_map'] = array(
       '#type' => 'checkbox',
-      '#title' => t('Include embedded dynamic map'),
+      '#title' => $this->t('Include embedded dynamic map'),
       '#default_value' => $this->getSetting('include_map'),
     );
     $elements['include_static_map'] = array(
       '#type' => 'checkbox',
-      '#title' => t('Include embedded static map'),
+      '#title' => $this->t('Include embedded static map'),
       '#default_value' => $this->getSetting('include_static_map'),
     );
     $elements['iframe_width'] = array(
       '#type' => 'textfield',
-      '#title' => t('Width of embedded map'),
+      '#title' => $this->t('Width of embedded map'),
       '#default_value' => $this->getSetting('iframe_width'),
-      '#description' => t('Note that static maps only accept sizes in pixels'),
+      '#description' => $this->t('Note that static maps only accept sizes in pixels'),
     );
     $elements['iframe_height'] = array(
       '#type' => 'textfield',
-      '#title' => t('Height of embedded map'),
+      '#title' => $this->t('Height of embedded map'),
       '#default_value' => $this->getSetting('iframe_height'),
-      '#description' => t('Note that static maps only accept sizes in pixels'),
+      '#description' => $this->t('Note that static maps only accept sizes in pixels'),
     );
     $elements['link_label'] = array(
       '#type' => 'markup',
-      '#markup' => '<h3>' . t('Link to map') . '</h3>',
+      '#markup' => '<h3>' . $this->t('Link to map') . '</h3>',
     );
     $elements['include_link'] = array(
       '#type' => 'checkbox',
-      '#title' => t('Include link to map'),
+      '#title' => $this->t('Include link to map'),
       '#default_value' => $this->getSetting('include_link'),
     );
     $elements['link_text'] = array(
       '#type' => 'textfield',
-      '#title' => t('Link text'),
+      '#title' => $this->t('Link text'),
       '#default_value' => $this->getSetting('link_text'),
-      '#description' => t("Enter the text to use for the link to the map, or enter 'use_address' (without the quotes) to use the entered address text as the link text"),
+      '#description' => $this->t("Enter the text to use for the link to the map, or enter 'use_address' (without the quotes) to use the entered address text as the link text"),
     );
     $elements['generic_label'] = array(
       '#type' => 'markup',
-      '#markup' => '<h3>' . t('General settings') . '</h3>',
+      '#markup' => '<h3>' . $this->t('General settings') . '</h3>',
     );
     $elements['zoom_level'] = array(
       '#type' => 'select',
       '#options' => array(
-        1 => t('1 - Minimum'),
+        1 => $this->t('1 - Minimum'),
         2 => 2,
         3 => 3,
         4 => 4,
@@ -111,45 +111,45 @@ class SimpleGMapFormatter extends FormatterBase {
         11 => 11,
         12 => 12,
         13 => 13,
-        14 => t('14 - Default'),
+        14 => $this->t('14 - Default'),
         15 => 15,
         16 => 16,
         17 => 17,
         18 => 18,
         19 => 19,
-        20 => t('20 - Maximum'),
+        20 => $this->t('20 - Maximum'),
       ),
-      '#title' => t('Zoom level'),
+      '#title' => $this->t('Zoom level'),
       '#default_value' => $this->getSetting('zoom_level'),
     );
     $elements['information_bubble'] = array(
       '#type' => 'checkbox',
-      '#title' => t('Show information bubble'),
+      '#title' => $this->t('Show information bubble'),
       '#default_value' => $this->getSetting('information_bubble'),
-      '#description' => t('If checked, the information bubble for the marker will be displayed when the embedded or linked map loads.'),
+      '#description' => $this->t('If checked, the information bubble for the marker will be displayed when the embedded or linked map loads.'),
     );
     $elements['include_text'] = array(
       '#type' => 'checkbox',
-      '#title' => t('Include original address text'),
+      '#title' => $this->t('Include original address text'),
       '#default_value' => $this->getSetting('include_text'),
     );
     $elements['map_type'] = array(
       '#type' => 'select',
-      '#title' => t('Map type'),
-      '#description' => t('Choose a default map type for embedded and linked maps'),
+      '#title' => $this->t('Map type'),
+      '#description' => $this->t('Choose a default map type for embedded and linked maps'),
       '#options' => array(
-        'm' => t('Map'),
-        'k' => t('Satellite'),
-        'h' => t('Hybrid'),
-        'p' => t('Terrain'),
+        'm' => $this->t('Map'),
+        'k' => $this->t('Satellite'),
+        'h' => $this->t('Hybrid'),
+        'p' => $this->t('Terrain'),
       ),
       '#default_value' => $this->getSetting('map_type'),
     );
     $elements['langcode'] = array(
       '#type' => 'textfield',
-      '#title' => t('Language'),
+      '#title' => $this->t('Language'),
       '#default_value' => $this->getSetting('langcode'),
-      '#description' => t("Enter a two-letter language code that Google Maps can recognize, or enter 'page' (without the quotes) to use the current page's Drupal language code"),
+      '#description' => $this->t("Enter a two-letter language code that Google Maps can recognize, or enter 'page' (without the quotes) to use the current page's Drupal language code"),
     );
     return $elements;
   }
@@ -160,40 +160,40 @@ class SimpleGMapFormatter extends FormatterBase {
   public function settingsSummary() {
     $summary = array();
 
-    $information_bubble = $this->getSetting('information_bubble') ? t('Yes') : t('No');
+    $information_bubble = $this->getSetting('information_bubble') ? $this->t('Yes') : $this->t('No');
     $map_types = array(
-      'm' => t('Map'),
-      'k' => t('Satellite'),
-      'h' => t('Hybrid'),
-      'p' => t('Terrain'),
+      'm' => $this->t('Map'),
+      'k' => $this->t('Satellite'),
+      'h' => $this->t('Hybrid'),
+      'p' => $this->t('Terrain'),
     );
     $map_type = $this->getSetting('map_type') ? $this->getSetting('map_type') : 'm';
     $map_type = isset($map_types[$map_type]) ? $map_types[$map_type] : $map_types['m'];
 
     $include_map = $this->getSetting('include_map');
     if ($include_map) {
-      $summary[] = t('Dynamic map: @width x @height', array('@width' => $this->getSetting('iframe_width'), '@height' => $this->getSetting('iframe_height')));
+      $summary[] = $this->t('Dynamic map: @width x @height', array('@width' => $this->getSetting('iframe_width'), '@height' => $this->getSetting('iframe_height')));
     }
     $include_static_map = $this->getSetting('include_static_map');
     if ($include_static_map) {
-      $summary[] = t('Static map: @width x @height', array('@width' => $this->getSetting('iframe_width'), '@height' => $this->getSetting('iframe_height')));
+      $summary[] = $this->t('Static map: @width x @height', array('@width' => $this->getSetting('iframe_width'), '@height' => $this->getSetting('iframe_height')));
     }
     $include_link = $this->getSetting('include_link');
     if ($include_link) {
-      $summary[] = t('Map link: @link_text', array('@link_text' => $this->getSetting('link_text')));
+      $summary[] = $this->t('Map link: @link_text', array('@link_text' => $this->getSetting('link_text')));
     }
 
     if ($include_link || $include_map || $include_static_map) {
       $langcode = SafeMarkup::checkPlain($this->getSetting('langcode'));
       $language = isset($langcode) ? $langcode : 'en';
-      $summary[] = t('Map Type: @map_type', array('@map_type' => $map_type));
-      $summary[] = t('Zoom Level: @zoom_level', array('@zoom_level' => $this->getSetting('zoom_level')));
-      $summary[] = t('Information Bubble: @information_bubble', array('@information_bubble' => $information_bubble));
-      $summary[] = t('Language: @language', array('@language' => $language));
+      $summary[] = $this->t('Map Type: @map_type', array('@map_type' => $map_type));
+      $summary[] = $this->t('Zoom Level: @zoom_level', array('@zoom_level' => $this->getSetting('zoom_level')));
+      $summary[] = $this->t('Information Bubble: @information_bubble', array('@information_bubble' => $information_bubble));
+      $summary[] = $this->t('Language: @language', array('@language' => $language));
     }
     $include_text = $this->getSetting('include_text');
     if ($include_text) {
-      $summary[] = t('Original text displayed');
+      $summary[] = $this->t('Original text displayed');
     }
 
     return $summary;
