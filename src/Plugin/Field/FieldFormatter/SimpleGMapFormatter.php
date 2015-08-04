@@ -19,7 +19,7 @@ use Drupal\Component\Utility\SafeMarkup;
  *   id = "simple_gmap",
  *   label = @Translation("Google Map from one-line address"),
  *   field_types = {
- *     "text"
+ *     "string"
  *   }
  * )
  */
