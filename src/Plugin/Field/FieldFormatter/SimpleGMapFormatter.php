@@ -202,7 +202,7 @@ class SimpleGMapFormatter extends FormatterBase {
   /**
    * {@inheritdoc}
    */
-  public function viewElements(FieldItemListInterface $items) {
+  public function viewElements(FieldItemListInterface $items, $langcode) {
 
     $element = array();
     $settings = $this->getSettings();
@@ -233,7 +233,7 @@ class SimpleGMapFormatter extends FormatterBase {
     $lang_to_use = SafeMarkup::checkPlain($settings['langcode']);
 
     if (!$lang_to_use || $lang_to_use == 'page') {
-      $lang_to_use = $items->getLangcode();
+      $lang_to_use = $langcode;
     }
 
     foreach ($items as $delta => $item) {
