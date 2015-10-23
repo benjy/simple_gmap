@@ -30,8 +30,6 @@ function simple_gmap_theme() {
         'map_type' => NULL,
         'langcode' => NULL,
         'static_map_type' => NULL,
-        'static_h' => NULL,
-        'static_w' => NULL,
       ),
       'template' => 'simple-gmap-output',
     ),

@@ -65,16 +65,20 @@ class SimpleGMapFormatter extends FormatterBase {
       '#default_value' => $this->getSetting('include_static_map'),
     );
     $elements['iframe_width'] = array(
-      '#type' => 'textfield',
+      '#type' => 'number',
       '#title' => $this->t('Width of embedded map'),
       '#default_value' => $this->getSetting('iframe_width'),
       '#description' => $this->t('Note that static maps only accept sizes in pixels'),
+      '#min' => 1,
+      '#step' => 1,
     );
     $elements['iframe_height'] = array(
-      '#type' => 'textfield',
+      '#type' => 'number',
       '#title' => $this->t('Height of embedded map'),
       '#default_value' => $this->getSetting('iframe_height'),
       '#description' => $this->t('Note that static maps only accept sizes in pixels'),
+      '#min' => 1,
+      '#step' => 1,
     );
     $elements['link_label'] = array(
       '#type' => 'markup',
@@ -206,20 +210,12 @@ class SimpleGMapFormatter extends FormatterBase {
 
     $element = array();
     $settings = $this->getSettings();
-    $static_h = 0;
-    $static_w = 0;
 
     $embed = (int) $settings['include_map'] ? TRUE : FALSE;
     $static = (int) $settings['include_static_map'] ? TRUE: FALSE;
     $link = (int) $settings['include_link'] ? TRUE : FALSE;
     $text = (int) $settings['include_text'] ? TRUE : FALSE;
 
-    $height = SafeMarkup::checkPlain($settings['iframe_height']);
-    $width = SafeMarkup::checkPlain($settings['iframe_width']);
-    if ($static) {
-      $static_h = (int) $height;
-      $static_w = (int) $width;
-    }
     $link_text = $link ? SafeMarkup::checkPlain($settings['link_text']) : '';
     $bubble = (int) $settings['information_bubble'] ? TRUE : FALSE;
     $zoom_level = (int) $settings['zoom_level'];
@@ -247,8 +243,8 @@ class SimpleGMapFormatter extends FormatterBase {
         '#include_static_map' => $static,
         '#include_link' => $link,
         '#include_text' => $text,
-        '#width' => $width,
-        '#height' => $height,
+        '#width' => $settings['iframe_width'],
+        '#height' => $settings['iframe_height'],
         '#url_suffix' => $url_value,
         '#zoom' => $zoom_level,
         '#information_bubble' => $bubble,
@@ -257,8 +253,6 @@ class SimpleGMapFormatter extends FormatterBase {
         '#map_type' => $map_type,
         '#langcode' => $lang_to_use,
         '#static_map_type' => $static_map_types[$map_type],
-        '#static_h' => $static_h,
-        '#static_w' => $static_w,
       );
     }
     return $element;
