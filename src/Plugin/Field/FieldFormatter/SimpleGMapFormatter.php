@@ -153,7 +153,7 @@ class SimpleGMapFormatter extends FormatterBase {
       '#type' => 'textfield',
       '#title' => $this->t('Language'),
       '#default_value' => $this->getSetting('langcode'),
-      '#description' => $this->t("Enter a two-letter language code that Google Maps can recognize, or enter 'page' (without the quotes) to use the current page's Drupal language code"),
+      '#description' => $this->t("Enter a two-letter language code that Google Maps can recognize, or enter 'page' (without the quotes) to use the current page's language code"),
     );
     return $elements;
   }
