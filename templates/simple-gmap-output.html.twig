@@ -8,6 +8,8 @@
  * - include_static_map: TRUE if an embedded static map should be displayed.
  * - width: Width of map.
  * - height: Height of map.
+ * - static_scale: For use with retinal displays. Can double the width and
+ *   height of static map ( possible values 1 or 2 )
  * - include_link: TRUE if a link to a map should be displayed.
  * - link_text: Text of link to display.
  * - url_suffix: Suffix of URLs to send to Google Maps for embedded and linked
@@ -31,7 +33,7 @@
 {% endif %}
 {% if include_static_map %}
   <div class="simple-gmap-static-map">
-    <img src="https://maps.googleapis.com/maps/api/staticmap?size={{ width }}x{{ height }}&amp;zoom={{ zoom }}&amp;language={{ langcode }}&amp;maptype={{ static_map_type }}&amp;markers=color:red|{{ url_suffix }}&amp;sensor=false" />
+    <img src="https://maps.googleapis.com/maps/api/staticmap?size={{ width }}x{{ height }}&amp;scale={{ static_scale }}&amp;zoom={{ zoom }}&amp;language={{ langcode }}&amp;maptype={{ static_map_type }}&amp;markers=color:red|{{ url_suffix }}&amp;sensor=false" />
   </div>
 {% endif %}
 {% if include_link %}

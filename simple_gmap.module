@@ -23,6 +23,7 @@ function simple_gmap_theme() {
         'address_text' => NULL,
         'width' => NULL,
         'height' => NULL,
+        'static_scale' => NULL,
         'url_suffix' => NULL,
         'zoom' => NULL,
         'information_bubble' => NULL,

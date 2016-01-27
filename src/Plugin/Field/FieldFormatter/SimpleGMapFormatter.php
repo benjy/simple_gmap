@@ -36,6 +36,7 @@ class SimpleGMapFormatter extends FormatterBase {
      "include_text" => "0",
      "iframe_height" => "200",
      "iframe_width" => "200",
+     "static_scale" => 1,
      "zoom_level" => "14",
      "information_bubble" => "1",
      "link_text" => "View larger map",
@@ -79,6 +80,16 @@ class SimpleGMapFormatter extends FormatterBase {
       '#description' => $this->t('Note that static maps only accept sizes in pixels'),
       '#min' => 1,
       '#step' => 1,
+    );
+    $elements['static_scale'] = array(
+      '#title' => $this->t('Load Retina sized static image'),
+      '#type' => 'select',
+      '#description' => $this->t('Choose "Yes" to double the width and height of the static image for use on retina displays. (Only applicable to static map)'),
+      '#options' => array(
+        1 => $this->t('No'),
+        2 => $this->t('Yes'),
+      ),
+      '#default_value' => (int) $this->getSetting('static_scale'),
     );
     $elements['link_label'] = array(
       '#type' => 'markup',
@@ -180,7 +191,7 @@ class SimpleGMapFormatter extends FormatterBase {
     }
     $include_static_map = $this->getSetting('include_static_map');
     if ($include_static_map) {
-      $summary[] = $this->t('Static map: @width x @height', array('@width' => $this->getSetting('iframe_width'), '@height' => $this->getSetting('iframe_height')));
+      $summary[] = $this->t('Static map: @width x @height, Scale: @static_scale', array('@width' => $this->getSetting('iframe_width'), '@height' => $this->getSetting('iframe_height'), '@static_scale' => $this->getSetting('static_scale')));
     }
     $include_link = $this->getSetting('include_link');
     if ($include_link) {
@@ -245,6 +256,7 @@ class SimpleGMapFormatter extends FormatterBase {
         '#include_text' => $text,
         '#width' => $settings['iframe_width'],
         '#height' => $settings['iframe_height'],
+        '#static_scale' => (int) $settings['static_scale'],
         '#url_suffix' => $url_value,
         '#zoom' => $zoom_level,
         '#information_bubble' => $bubble,
