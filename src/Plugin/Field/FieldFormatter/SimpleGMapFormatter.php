@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\simple_gmap\Plugin\Field\FieldFormatter\SimpleGMapFormatter.
- */
-
 namespace Drupal\simple_gmap\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
