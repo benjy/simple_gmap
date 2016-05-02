@@ -192,8 +192,7 @@ class SimpleGMapFormatter extends FormatterBase {
     }
 
     if ($include_link || $include_map || $include_static_map) {
-      $langcode = SafeMarkup::checkPlain($this->getSetting('langcode'));
-      $language = isset($langcode) ? $langcode : 'en';
+      $language =  ['#plain_text' => $this->getSetting('langcode')];
       $summary[] = $this->t('Map Type: @map_type', array('@map_type' => $map_type));
       $summary[] = $this->t('Zoom Level: @zoom_level', array('@zoom_level' => $this->getSetting('zoom_level')));
       $summary[] = $this->t('Information Bubble: @information_bubble', array('@information_bubble' => $information_bubble));
@@ -220,7 +219,7 @@ class SimpleGMapFormatter extends FormatterBase {
     $link = (int) $settings['include_link'] ? TRUE : FALSE;
     $text = (int) $settings['include_text'] ? TRUE : FALSE;
 
-    $link_text = $link ? SafeMarkup::checkPlain($settings['link_text']) : '';
+    $link_text = ['#plain_text' => $settings['link_text']];
     $bubble = (int) $settings['information_bubble'] ? TRUE : FALSE;
     $zoom_level = (int) $settings['zoom_level'];
 
@@ -230,10 +229,10 @@ class SimpleGMapFormatter extends FormatterBase {
     $map_type = $settings['map_type'];
 
     // Figure out a language code to use. Google cannot recognize 'und'.
-    $lang_to_use = SafeMarkup::checkPlain($settings['langcode']);
-
-    if (!$lang_to_use || $lang_to_use == 'page') {
+    if ($settings['langcode'] == 'page') {
       $lang_to_use = $langcode;
+    } else {
+      $lang_to_use = ['#plain_text' => $settings['langcode']];
     }
 
     foreach ($items as $delta => $item) {
