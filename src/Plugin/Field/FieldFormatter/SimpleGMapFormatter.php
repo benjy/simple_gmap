@@ -61,20 +61,18 @@ class SimpleGMapFormatter extends FormatterBase {
       '#default_value' => $this->getSetting('include_static_map'),
     );
     $elements['iframe_width'] = array(
-      '#type' => 'number',
+      '#type' => 'textfield',
       '#title' => $this->t('Width of embedded map'),
       '#default_value' => $this->getSetting('iframe_width'),
-      '#description' => $this->t('Note that static maps only accept sizes in pixels'),
-      '#min' => 1,
-      '#step' => 1,
+      '#description' => $this->t('You can set sizes in px or percent (ex: 600px or 100%). Note that static maps only accept sizes in pixels, without the suffix px (ex: 600).'),
+      '#size' => 10,
     );
     $elements['iframe_height'] = array(
-      '#type' => 'number',
+      '#type' => 'textfield',
       '#title' => $this->t('Height of embedded map'),
       '#default_value' => $this->getSetting('iframe_height'),
-      '#description' => $this->t('Note that static maps only accept sizes in pixels'),
-      '#min' => 1,
-      '#step' => 1,
+      '#description' => $this->t('You can set sizes in px or percent (ex: 600px or 100%). Note that static maps only accept sizes in pixels, without the suffix px (ex: 600).'),
+      '#size' => 10,
     );
     $elements['static_scale'] = array(
       '#title' => $this->t('Load Retina sized static image'),
@@ -249,8 +247,8 @@ class SimpleGMapFormatter extends FormatterBase {
         '#include_static_map' => $static,
         '#include_link' => $link,
         '#include_text' => $text,
-        '#width' => $settings['iframe_width'],
-        '#height' => $settings['iframe_height'],
+        '#width' => ['#plain_text' => $settings['iframe_width']],
+        '#height' => ['#plain_text' => $settings['iframe_height']],
         '#static_scale' => (int) $settings['static_scale'],
         '#url_suffix' => $url_value,
         '#zoom' => $zoom_level,
