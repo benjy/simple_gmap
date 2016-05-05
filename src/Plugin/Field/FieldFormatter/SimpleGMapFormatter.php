@@ -192,11 +192,10 @@ class SimpleGMapFormatter extends FormatterBase {
     }
 
     if ($include_link || $include_map || $include_static_map) {
-      $language =  ['#plain_text' => $this->getSetting('langcode')];
       $summary[] = $this->t('Map Type: @map_type', array('@map_type' => $map_type));
       $summary[] = $this->t('Zoom Level: @zoom_level', array('@zoom_level' => $this->getSetting('zoom_level')));
       $summary[] = $this->t('Information Bubble: @information_bubble', array('@information_bubble' => $information_bubble));
-      $summary[] = $this->t('Language: @language', array('@language' => $language));
+      $summary[] = $this->t('Language: @language', array('@language' => $this->getSetting('langcode')));
     }
     $include_text = $this->getSetting('include_text');
     if ($include_text) {
