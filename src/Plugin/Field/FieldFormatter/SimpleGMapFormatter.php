@@ -26,17 +26,18 @@ class SimpleGMapFormatter extends FormatterBase {
   public static function defaultSettings() {
     return array(
       "include_map" => "1",
-     "include_static_map" => "0",
-     "include_link" => "0",
-     "include_text" => "0",
-     "iframe_height" => "200",
-     "iframe_width" => "200",
-     "static_scale" => 1,
-     "zoom_level" => "14",
-     "information_bubble" => "1",
-     "link_text" => "View larger map",
-     "map_type" => "m",
-     "langcode" => "en"
+      "include_static_map" => "0",
+      "include_link" => "0",
+      "include_text" => "0",
+      "iframe_height" => "200",
+      "iframe_width" => "200",
+      "static_scale" => 1,
+      "zoom_level" => "14",
+      "information_bubble" => "1",
+      "link_text" => "View larger map",
+      "map_type" => "m",
+      "langcode" => "en",
+      "apikey" => "",
     ) + parent::defaultSettings();
   }
 
@@ -59,6 +60,17 @@ class SimpleGMapFormatter extends FormatterBase {
       '#type' => 'checkbox',
       '#title' => $this->t('Include embedded static map'),
       '#default_value' => $this->getSetting('include_static_map'),
+    );
+    $elements['apikey'] = array(
+      '#type' => 'textfield',
+      '#title' => $this->t('Google Maps API key'),
+      '#default_value' => $this->getSetting('apikey'),
+      '#description' => $this->t('Static Maps will not work without an API key. See the <a href="https://developers.google.com/maps/documentation/static-maps" target="_blank">Static Maps API page</a> to learn more and obtain a key.'),
+      '#states' => array(
+        'visible' => array(
+          ':input[name*="include_static_map"]' => ['checked' => TRUE],
+        ),
+      ),
     );
     $elements['iframe_width'] = array(
       '#type' => 'textfield',
@@ -256,6 +268,7 @@ class SimpleGMapFormatter extends FormatterBase {
         '#map_type' => $map_type,
         '#langcode' => $lang_to_use,
         '#static_map_type' => $static_map_types[$map_type],
+        '#apikey' => $settings['apikey'],
       );
     }
     return $element;
