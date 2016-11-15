@@ -33,7 +33,6 @@ class SimpleGMapFormatter extends FormatterBase {
       "iframe_width" => "200",
       "static_scale" => 1,
       "zoom_level" => "14",
-      "information_bubble" => "1",
       "link_text" => "View larger map",
       "map_type" => "m",
       "langcode" => "en",
@@ -142,12 +141,6 @@ class SimpleGMapFormatter extends FormatterBase {
       '#title' => $this->t('Zoom level'),
       '#default_value' => $this->getSetting('zoom_level'),
     );
-    $elements['information_bubble'] = array(
-      '#type' => 'checkbox',
-      '#title' => $this->t('Show information bubble'),
-      '#default_value' => $this->getSetting('information_bubble'),
-      '#description' => $this->t('If checked, the information bubble for the marker will be displayed when the embedded or linked map loads.'),
-    );
     $elements['include_text'] = array(
       '#type' => 'checkbox',
       '#title' => $this->t('Include original address text'),
@@ -180,7 +173,6 @@ class SimpleGMapFormatter extends FormatterBase {
   public function settingsSummary() {
     $summary = array();
 
-    $information_bubble = $this->getSetting('information_bubble') ? $this->t('Yes') : $this->t('No');
     $map_types = array(
       'm' => $this->t('Map'),
       'k' => $this->t('Satellite'),
@@ -206,7 +198,6 @@ class SimpleGMapFormatter extends FormatterBase {
     if ($include_link || $include_map || $include_static_map) {
       $summary[] = $this->t('Map Type: @map_type', array('@map_type' => $map_type));
       $summary[] = $this->t('Zoom Level: @zoom_level', array('@zoom_level' => $this->getSetting('zoom_level')));
-      $summary[] = $this->t('Information Bubble: @information_bubble', array('@information_bubble' => $information_bubble));
       $summary[] = $this->t('Language: @language', array('@language' => $this->getSetting('langcode')));
     }
     $include_text = $this->getSetting('include_text');
@@ -230,7 +221,6 @@ class SimpleGMapFormatter extends FormatterBase {
     $link = (int) $settings['include_link'] ? TRUE : FALSE;
     $text = (int) $settings['include_text'] ? TRUE : FALSE;
 
-    $bubble = (int) $settings['information_bubble'] ? TRUE : FALSE;
     $zoom_level = (int) $settings['zoom_level'];
 
     // For some reason, static gmaps accepts a different value for map type.
@@ -263,7 +253,6 @@ class SimpleGMapFormatter extends FormatterBase {
         '#static_scale' => (int) $settings['static_scale'],
         '#url_suffix' => $url_value,
         '#zoom' => $zoom_level,
-        '#information_bubble' => $bubble,
         '#link_text' => $link_text,
         '#address_text' => $address,
         '#map_type' => $map_type,

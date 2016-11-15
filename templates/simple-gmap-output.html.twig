@@ -15,9 +15,6 @@
  * - url_suffix: Suffix of URLs to send to Google Maps for embedded and linked
  *   maps. Contains the URL-encoded address.
  * - zoom: Zoom level for embedded and linked maps.
- * - information_bubble: TRUE if an information bubble should be displayed on
- *   maps. Note that in the Google Maps URLs, you need to send iwloc=A to use
- *   a bubble, and iwloc=near to omit the bubble.
  * - address_text: Address text to display (empty if it should not be
  *   displayed).
  * - map_type: Type of map to use (Google code, such as 'm' or 't').
@@ -30,7 +27,7 @@
  */
 #}
 {% if include_map %}
-  <iframe width="{{ width }}" height="{{ height }}" frameborder="0" style="border:0" src="https://maps.google.com/maps?hl={{ langcode }}&amp;q={{ url_suffix }}&amp;iwloc={{ information_bubble ? 'A' : 'near' }}&amp;t={{ map_type }}&amp;z={{ zoom }}&amp;output=embed"></iframe>
+  <iframe width="{{ width }}" height="{{ height }}" frameborder="0" style="border:0" src="https://maps.google.com/maps?hl={{ langcode }}&amp;q={{ url_suffix }}&amp;t={{ map_type }}&amp;z={{ zoom }}&amp;output=embed"></iframe>
 {% endif %}
 {% if include_static_map %}
   <div class="simple-gmap-static-map">
@@ -38,7 +35,7 @@
   </div>
 {% endif %}
 {% if include_link %}
-  <p class="simple-gmap-link"><a href="https://maps.google.com/maps?q={{ url_suffix }}&amp;hl={{ langcode }}&amp;iwloc={{ information_bubble ? 'A' : 'near' }}&amp;t={{ map_type }}&amp;z={{ zoom }}" target="_blank">{{ link_text }}</a></p>
+  <p class="simple-gmap-link"><a href="https://maps.google.com/maps?q={{ url_suffix }}&amp;hl={{ langcode }}&amp;t={{ map_type }}&amp;z={{ zoom }}" target="_blank">{{ link_text }}</a></p>
 {% endif %}
 {% if address_text is not empty %}
   <p class="simple-gmap-address">{{ address_text }}</p>

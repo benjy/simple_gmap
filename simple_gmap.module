@@ -26,7 +26,6 @@ function simple_gmap_theme() {
         'static_scale' => NULL,
         'url_suffix' => NULL,
         'zoom' => NULL,
-        'information_bubble' => NULL,
         'link_text' => NULL,
         'map_type' => NULL,
         'langcode' => NULL,
