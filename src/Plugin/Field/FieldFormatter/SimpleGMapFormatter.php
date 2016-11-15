@@ -230,7 +230,6 @@ class SimpleGMapFormatter extends FormatterBase {
     $link = (int) $settings['include_link'] ? TRUE : FALSE;
     $text = (int) $settings['include_text'] ? TRUE : FALSE;
 
-    $link_text = ['#plain_text' => $settings['link_text']];
     $bubble = (int) $settings['information_bubble'] ? TRUE : FALSE;
     $zoom_level = (int) $settings['zoom_level'];
 
@@ -250,6 +249,8 @@ class SimpleGMapFormatter extends FormatterBase {
       $url_value = urlencode(SafeMarkup::checkPlain($item->value));
       $address_value = SafeMarkup::checkPlain($item->value);
       $address = $text ? $address_value : '';
+      $text_for_link = ($settings['link_text'] == 'use_address') ? $address_value : $settings['link_text'];
+      $link_text = ['#plain_text' => $text_for_link];
 
       $element[$delta] = array(
         '#theme' => 'simple_gmap_output',
@@ -263,7 +264,7 @@ class SimpleGMapFormatter extends FormatterBase {
         '#url_suffix' => $url_value,
         '#zoom' => $zoom_level,
         '#information_bubble' => $bubble,
-        '#link_text' => ($link_text == 'use_address') ? $address_value : $link_text,
+        '#link_text' => $link_text,
         '#address_text' => $address,
         '#map_type' => $map_type,
         '#langcode' => $lang_to_use,
