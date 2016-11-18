@@ -236,9 +236,9 @@ class SimpleGMapFormatter extends FormatterBase {
     }
 
     foreach ($items as $delta => $item) {
-      $url_value = urlencode(SafeMarkup::checkPlain($item->value));
-      $address_value = SafeMarkup::checkPlain($item->value);
-      $address = $text ? $address_value : '';
+      $url_value = urlencode($item->value);
+      $address_value = $item->value;
+      $address = $text ? SafeMarkup::checkPlain($address_value) : '';
       $text_for_link = ($settings['link_text'] == 'use_address') ? $address_value : $settings['link_text'];
       $link_text = ['#plain_text' => $text_for_link];
 
