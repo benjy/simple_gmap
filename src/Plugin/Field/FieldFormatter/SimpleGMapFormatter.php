@@ -5,7 +5,6 @@ namespace Drupal\simple_gmap\Plugin\Field\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Component\Utility\SafeMarkup;
 
 /**
  * Plugin implementation of the 'simple_gmap' formatter.
@@ -240,7 +239,7 @@ class SimpleGMapFormatter extends FormatterBase {
     foreach ($items as $delta => $item) {
       $url_value = urlencode($item->value);
       $address_value = $item->value;
-      $address = $text ? SafeMarkup::checkPlain($address_value) : '';
+      $address = $text ? $address_value : '';
       $text_for_link = ($settings['link_text'] == 'use_address') ? $address_value : $settings['link_text'];
       $link_text = ['#plain_text' => $text_for_link];
 
