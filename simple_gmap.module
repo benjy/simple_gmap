@@ -13,9 +13,9 @@
  * Implements hook_theme().
  */
 function simple_gmap_theme() {
-  return array(
-    'simple_gmap_output' => array(
-      'variables' => array(
+  return [
+    'simple_gmap_output' => [
+      'variables' => [
         'include_map' => NULL,
         'include_static_map' => NULL,
         'include_link' => NULL,
@@ -31,8 +31,8 @@ function simple_gmap_theme() {
         'langcode' => NULL,
         'static_map_type' => NULL,
         'apikey' => NULL,
-      ),
+      ],
       'template' => 'simple-gmap-output',
-    ),
-  );
+    ],
+  ];
 }

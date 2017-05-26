@@ -25,7 +25,7 @@ class SimpleGMapFormatter extends FormatterBase {
    * {@inheritdoc}
    */
   public static function defaultSettings() {
-    return array(
+    return [
       "include_map" => "1",
       "include_static_map" => "0",
       "include_link" => "0",
@@ -38,7 +38,7 @@ class SimpleGMapFormatter extends FormatterBase {
       "map_type" => "m",
       "langcode" => "en",
       "apikey" => "",
-    ) + parent::defaultSettings();
+    ] + parent::defaultSettings();
   }
 
   /**
@@ -47,77 +47,77 @@ class SimpleGMapFormatter extends FormatterBase {
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $elements = parent::settingsForm($form, $form_state);
 
-    $elements['embedded_label'] = array(
+    $elements['embedded_label'] = [
       '#type' => 'markup',
       '#markup' => '<h3>' . $this->t('Embedded map') . '</h3>',
-    );
-    $elements['include_map'] = array(
+    ];
+    $elements['include_map'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Include embedded dynamic map'),
       '#default_value' => $this->getSetting('include_map'),
-    );
-    $elements['include_static_map'] = array(
+    ];
+    $elements['include_static_map'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Include embedded static map'),
       '#default_value' => $this->getSetting('include_static_map'),
-    );
-    $elements['apikey'] = array(
+    ];
+    $elements['apikey'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Google Maps API key'),
       '#default_value' => $this->getSetting('apikey'),
       '#description' => $this->t('Static Maps will not work without an API key. See the <a href="https://developers.google.com/maps/documentation/static-maps" target="_blank">Static Maps API page</a> to learn more and obtain a key.'),
-      '#states' => array(
-        'visible' => array(
+      '#states' => [
+        'visible' => [
           ':input[name*="include_static_map"]' => ['checked' => TRUE],
-        ),
-      ),
-    );
-    $elements['iframe_width'] = array(
+        ],
+      ],
+    ];
+    $elements['iframe_width'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Width of embedded map'),
       '#default_value' => $this->getSetting('iframe_width'),
       '#description' => $this->t('You can set sizes in px or percent (ex: 600px or 100%). Note that static maps only accept sizes in pixels, without the suffix px (ex: 600).'),
       '#size' => 10,
-    );
-    $elements['iframe_height'] = array(
+    ];
+    $elements['iframe_height'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Height of embedded map'),
       '#default_value' => $this->getSetting('iframe_height'),
       '#description' => $this->t('You can set sizes in px or percent (ex: 600px or 100%). Note that static maps only accept sizes in pixels, without the suffix px (ex: 600).'),
       '#size' => 10,
-    );
-    $elements['static_scale'] = array(
+    ];
+    $elements['static_scale'] = [
       '#title' => $this->t('Load Retina sized static image'),
       '#type' => 'select',
       '#description' => $this->t('Choose "Yes" to double the width and height of the static image for use on retina displays. (Only applicable to static map)'),
-      '#options' => array(
+      '#options' => [
         1 => $this->t('No'),
         2 => $this->t('Yes'),
-      ),
+      ],
       '#default_value' => (int) $this->getSetting('static_scale'),
-    );
-    $elements['link_label'] = array(
+    ];
+    $elements['link_label'] = [
       '#type' => 'markup',
       '#markup' => '<h3>' . $this->t('Link to map') . '</h3>',
-    );
-    $elements['include_link'] = array(
+    ];
+    $elements['include_link'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Include link to map'),
       '#default_value' => $this->getSetting('include_link'),
-    );
-    $elements['link_text'] = array(
+    ];
+    $elements['link_text'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Link text'),
       '#default_value' => $this->getSetting('link_text'),
       '#description' => $this->t("Enter the text to use for the link to the map, or enter 'use_address' (without the quotes) to use the entered address text as the link text"),
-    );
-    $elements['generic_label'] = array(
+    ];
+    $elements['generic_label'] = [
       '#type' => 'markup',
       '#markup' => '<h3>' . $this->t('General settings') . '</h3>',
-    );
-    $elements['zoom_level'] = array(
+    ];
+    $elements['zoom_level'] = [
       '#type' => 'select',
-      '#options' => array(
+      '#options' => [
         1 => $this->t('1 - Minimum'),
         2 => 2,
         3 => 3,
@@ -138,33 +138,33 @@ class SimpleGMapFormatter extends FormatterBase {
         18 => 18,
         19 => 19,
         20 => $this->t('20 - Maximum'),
-      ),
+      ],
       '#title' => $this->t('Zoom level'),
       '#default_value' => $this->getSetting('zoom_level'),
-    );
-    $elements['include_text'] = array(
+    ];
+    $elements['include_text'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Include original address text'),
       '#default_value' => $this->getSetting('include_text'),
-    );
-    $elements['map_type'] = array(
+    ];
+    $elements['map_type'] = [
       '#type' => 'select',
       '#title' => $this->t('Map type'),
       '#description' => $this->t('Choose a default map type for embedded and linked maps'),
-      '#options' => array(
+      '#options' => [
         'm' => $this->t('Map'),
         'k' => $this->t('Satellite'),
         'h' => $this->t('Hybrid'),
         'p' => $this->t('Terrain'),
-      ),
+      ],
       '#default_value' => $this->getSetting('map_type'),
-    );
-    $elements['langcode'] = array(
+    ];
+    $elements['langcode'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Language'),
       '#default_value' => $this->getSetting('langcode'),
       '#description' => $this->t("Enter a two-letter language code that Google Maps can recognize, or enter 'page' (without the quotes) to use the current page's language code"),
-    );
+    ];
     return $elements;
   }
 
@@ -172,34 +172,34 @@ class SimpleGMapFormatter extends FormatterBase {
    * {@inheritdoc}
    */
   public function settingsSummary() {
-    $summary = array();
+    $summary = [];
 
-    $map_types = array(
+    $map_types = [
       'm' => $this->t('Map'),
       'k' => $this->t('Satellite'),
       'h' => $this->t('Hybrid'),
       'p' => $this->t('Terrain'),
-    );
+    ];
     $map_type = $this->getSetting('map_type') ? $this->getSetting('map_type') : 'm';
     $map_type = isset($map_types[$map_type]) ? $map_types[$map_type] : $map_types['m'];
 
     $include_map = $this->getSetting('include_map');
     if ($include_map) {
-      $summary[] = $this->t('Dynamic map: @width x @height', array('@width' => $this->getSetting('iframe_width'), '@height' => $this->getSetting('iframe_height')));
+      $summary[] = $this->t('Dynamic map: @width x @height', ['@width' => $this->getSetting('iframe_width'), '@height' => $this->getSetting('iframe_height')]);
     }
     $include_static_map = $this->getSetting('include_static_map');
     if ($include_static_map) {
-      $summary[] = $this->t('Static map: @width x @height, Scale: @static_scale', array('@width' => $this->getSetting('iframe_width'), '@height' => $this->getSetting('iframe_height'), '@static_scale' => $this->getSetting('static_scale')));
+      $summary[] = $this->t('Static map: @width x @height, Scale: @static_scale', ['@width' => $this->getSetting('iframe_width'), '@height' => $this->getSetting('iframe_height'), '@static_scale' => $this->getSetting('static_scale')]);
     }
     $include_link = $this->getSetting('include_link');
     if ($include_link) {
-      $summary[] = $this->t('Map link: @link_text', array('@link_text' => $this->getSetting('link_text')));
+      $summary[] = $this->t('Map link: @link_text', ['@link_text' => $this->getSetting('link_text')]);
     }
 
     if ($include_link || $include_map || $include_static_map) {
-      $summary[] = $this->t('Map Type: @map_type', array('@map_type' => $map_type));
-      $summary[] = $this->t('Zoom Level: @zoom_level', array('@zoom_level' => $this->getSetting('zoom_level')));
-      $summary[] = $this->t('Language: @language', array('@language' => $this->getSetting('langcode')));
+      $summary[] = $this->t('Map Type: @map_type', ['@map_type' => $map_type]);
+      $summary[] = $this->t('Zoom Level: @zoom_level', ['@zoom_level' => $this->getSetting('zoom_level')]);
+      $summary[] = $this->t('Language: @language', ['@language' => $this->getSetting('langcode')]);
     }
     $include_text = $this->getSetting('include_text');
     if ($include_text) {
@@ -214,7 +214,7 @@ class SimpleGMapFormatter extends FormatterBase {
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
 
-    $element = array();
+    $element = [];
     $settings = $this->getSettings();
 
     $embed = (int) $settings['include_map'] ? TRUE : FALSE;
@@ -225,7 +225,7 @@ class SimpleGMapFormatter extends FormatterBase {
     $zoom_level = (int) $settings['zoom_level'];
 
     // For some reason, static gmaps accepts a different value for map type.
-    $static_map_types = array('m' => 'roadmap', 'k' => 'satellite', 'h' => 'hybrid', 'p' => 'terrain');
+    $static_map_types = ['m' => 'roadmap', 'k' => 'satellite', 'h' => 'hybrid', 'p' => 'terrain'];
 
     $map_type = $settings['map_type'];
 
@@ -243,7 +243,7 @@ class SimpleGMapFormatter extends FormatterBase {
       $text_for_link = ($settings['link_text'] == 'use_address') ? $address_value : $settings['link_text'];
       $link_text = ['#plain_text' => $text_for_link];
 
-      $element[$delta] = array(
+      $element[$delta] = [
         '#theme' => 'simple_gmap_output',
         '#include_map' => $embed,
         '#include_static_map' => $static,
@@ -260,7 +260,7 @@ class SimpleGMapFormatter extends FormatterBase {
         '#langcode' => $lang_to_use,
         '#static_map_type' => $static_map_types[$map_type],
         '#apikey' => $settings['apikey'],
-      );
+      ];
     }
     return $element;
   }
