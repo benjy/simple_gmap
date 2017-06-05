@@ -15,10 +15,10 @@ field.formatter.settings.simple_gmap:
       type: boolean
       label: 'Whether to include text with the map'
     iframe_height:
-      type: integer
+      type: string
       label: 'Height of embedded map'
     iframe_width:
-      type: integer
+      type: string
       label: 'Width of embedded map'
     static_scale:
       type: integer
