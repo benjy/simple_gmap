@@ -56,7 +56,7 @@ class SimpleGmapTest extends WebTestBase {
       'administer node fields',
       'administer node display',
       'create article content',
-      ]);
+    ]);
     $this->drupalLogin($admin_user);
 
     // Make sure local tasks and page title are showing.
@@ -80,35 +80,35 @@ class SimpleGmapTest extends WebTestBase {
     // Add three text fields to the Article content type.
     $this->drupalGet('admin/structure/types/manage/article/fields/add-field');
     $this->drupalPostForm(NULL, [
-        'new_storage_type' => 'string',
-      ], 'Save and continue');
+      'new_storage_type' => 'string',
+    ], 'Save and continue');
     // This opens up the page again with field errors for name and label.
     $this->drupalPostForm(NULL, [
       'label' => $field1,
       'field_name' => $field1,
-      ], 'Save and continue');
+    ], 'Save and continue');
     $this->drupalPostForm(NULL, [], 'Save field settings');
     $this->drupalPostForm(NULL, [], 'Save settings');
 
     $this->drupalGet('admin/structure/types/manage/article/fields/add-field');
     $this->drupalPostForm(NULL, [
-        'new_storage_type' => 'string',
-      ], 'Save and continue');
+      'new_storage_type' => 'string',
+    ], 'Save and continue');
     $this->drupalPostForm(NULL, [
       'label' => $field2,
       'field_name' => $field2,
-      ], 'Save and continue');
+    ], 'Save and continue');
     $this->drupalPostForm(NULL, [], 'Save field settings');
     $this->drupalPostForm(NULL, [], 'Save settings');
 
     $this->drupalGet('admin/structure/types/manage/article/fields/add-field');
     $this->drupalPostForm(NULL, [
-        'new_storage_type' => 'string',
-      ], 'Save and continue');
+      'new_storage_type' => 'string',
+    ], 'Save and continue');
     $this->drupalPostForm(NULL, [
       'label' => $field3,
       'field_name' => $field3,
-      ], 'Save and continue');
+    ], 'Save and continue');
     $this->drupalPostForm(NULL, [], 'Save field settings');
     $this->drupalPostForm(NULL, [], 'Save settings');
 
@@ -119,7 +119,7 @@ class SimpleGmapTest extends WebTestBase {
       'fields[field_' . $field1 . '][type]' => 'simple_gmap',
       'fields[field_' . $field2 . '][type]' => 'simple_gmap',
       'fields[field_' . $field3 . '][type]' => 'simple_gmap',
-      ], 'Save');
+    ], 'Save');
 
     // Change the settings for all field formatters.
     $this->drupalPostAjaxForm(NULL, [], 'field_' . $field1 . '_settings_edit');
@@ -130,7 +130,7 @@ class SimpleGmapTest extends WebTestBase {
       $prefix . '[apikey]' => $this->apiKey,
       $prefix . '[include_link]' => TRUE,
       $prefix . '[include_text]' => TRUE,
-      ], 'Update');
+    ], 'Update');
     $this->assertText('Map link: View larger map');
     $this->assertText('Zoom Level: 14');
     $this->assertText('Language: en');
@@ -151,7 +151,7 @@ class SimpleGmapTest extends WebTestBase {
       $prefix . '[zoom_level]' => 5,
       $prefix . '[map_type]' => 'k',
       $prefix . '[langcode]' => 'page',
-      ], 'Update');
+    ], 'Update');
     $this->assertText('Map link: use_address');
     $this->assertText('Zoom Level: 5');
     $this->assertText('Language: page');
@@ -165,7 +165,7 @@ class SimpleGmapTest extends WebTestBase {
       $prefix . '[apikey]' => $this->apiKey,
       $prefix . '[include_link]' => TRUE,
       $prefix . '[include_text]' => TRUE,
-      ], 'Update');
+    ], 'Update');
 
     // Save all the settings.
     $this->drupalPostForm(NULL, [], 'Save');
@@ -177,7 +177,7 @@ class SimpleGmapTest extends WebTestBase {
       'field_' . $field1 . '[0][value]' => $address1,
       'field_' . $field2 . '[0][value]' => $address2,
       'field_' . $field3 . '[0][value]' => $address3,
-      ], 'Save');
+    ], 'Save');
 
     $this->pass('Open the previous link. In the first field, verify: (1) Both the static and dynamic maps are displayed. (2) The link to the larger map is included, with text "View larger map". (3) If you click the map link, the larger map is shown and "Eiffel Tower" appears in the address box. (4) The text "Eiffel Tower" appears below the maps and link.');
     $this->pass("In the second field, verify: (1) Both the static and dynamic maps are displayed. (2) They should be zoomed way out to the regional level, rather than street level. (3) They should be satellite images rather than street maps. (4) The link to the larger map is included, but the link text is \"Place de l'Université-du-Québec, boulevard Charest Est, Québec, QC G1K\". (5) Verify that the map link has &hl=en in it (so it picked up the page language). (6) If you click the map link, the larger map is shown and \"Place de l'Université-du-Québec, boulevard Charest Est, Québec, QC G1K\" appears in the address box. (7) The text \"Place de l'Université-du-Québec, boulevard Charest Est, Québec, QC G1K\" appears below the maps and link.");

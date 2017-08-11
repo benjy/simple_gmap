@@ -14,7 +14,8 @@ Google Maps' iframe embedding capability to embed a map at a given address that
 Google Maps can recognize, or to make a link to Google Map.
 
 To install and use:
-- Upload/unzip to your Drupal 8 /modules directory (or /modules/contrib or whatever).
+- Upload/unzip to your Drupal 8 /modules directory (or /modules/contrib or
+  whatever).
 - Enable the module.
 - Add a plain Text field to your content type. You probably should add some
   Help text to the field to explain that a one-line address that Google Maps can

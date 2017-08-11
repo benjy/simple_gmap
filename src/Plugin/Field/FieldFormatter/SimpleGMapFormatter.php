@@ -189,7 +189,11 @@ class SimpleGMapFormatter extends FormatterBase {
     }
     $include_static_map = $this->getSetting('include_static_map');
     if ($include_static_map) {
-      $summary[] = $this->t('Static map: @width x @height, Scale: @static_scale', ['@width' => $this->getSetting('iframe_width'), '@height' => $this->getSetting('iframe_height'), '@static_scale' => $this->getSetting('static_scale')]);
+      $summary[] = $this->t('Static map: @width x @height, Scale: @static_scale', [
+        '@width' => $this->getSetting('iframe_width'),
+        '@height' => $this->getSetting('iframe_height'),
+        '@static_scale' => $this->getSetting('static_scale'),
+      ]);
     }
     $include_link = $this->getSetting('include_link');
     if ($include_link) {
@@ -218,21 +222,27 @@ class SimpleGMapFormatter extends FormatterBase {
     $settings = $this->getSettings();
 
     $embed = (int) $settings['include_map'] ? TRUE : FALSE;
-    $static = (int) $settings['include_static_map'] ? TRUE: FALSE;
+    $static = (int) $settings['include_static_map'] ? TRUE : FALSE;
     $link = (int) $settings['include_link'] ? TRUE : FALSE;
     $text = (int) $settings['include_text'] ? TRUE : FALSE;
 
     $zoom_level = (int) $settings['zoom_level'];
 
     // For some reason, static gmaps accepts a different value for map type.
-    $static_map_types = ['m' => 'roadmap', 'k' => 'satellite', 'h' => 'hybrid', 'p' => 'terrain'];
+    $static_map_types = [
+      'm' => 'roadmap',
+      'k' => 'satellite',
+      'h' => 'hybrid',
+      'p' => 'terrain',
+    ];
 
     $map_type = $settings['map_type'];
 
     // Figure out a language code to use. Google cannot recognize 'und'.
     if ($settings['langcode'] == 'page') {
       $lang_to_use = $langcode;
-    } else {
+    }
+    else {
       $lang_to_use = ['#plain_text' => $settings['langcode']];
     }
 
@@ -264,4 +274,5 @@ class SimpleGMapFormatter extends FormatterBase {
     }
     return $element;
   }
+
 }

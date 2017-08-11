@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Simple Google Maps module
+ * Simple Google Maps module.
  *
  * Provides a Google Maps link/map formatter for simple Text fields. Note that
  * this is just a field formatter for Text fields, not a field. See README.txt
