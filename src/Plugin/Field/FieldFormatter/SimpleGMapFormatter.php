@@ -26,10 +26,10 @@ class SimpleGMapFormatter extends FormatterBase {
    */
   public static function defaultSettings() {
     return [
-      "include_map" => "1",
-      "include_static_map" => "0",
-      "include_link" => "0",
-      "include_text" => "0",
+      "include_map" => TRUE,
+      "include_static_map" => FALSE,
+      "include_link" => FALSE,
+      "include_text" => FALSE,
       "iframe_height" => "200",
       "iframe_width" => "200",
       "static_scale" => 1,
@@ -68,6 +68,9 @@ class SimpleGMapFormatter extends FormatterBase {
       '#description' => $this->t('Static Maps will not work without an API key. See the <a href="https://developers.google.com/maps/documentation/static-maps" target="_blank">Static Maps API page</a> to learn more and obtain a key.'),
       '#states' => [
         'visible' => [
+          ":input[name*='include_static_map']" => ['checked' => TRUE],
+        ],
+        'required' => [
           ':input[name*="include_static_map"]' => ['checked' => TRUE],
         ],
       ],
@@ -185,8 +188,12 @@ class SimpleGMapFormatter extends FormatterBase {
 
     $include_map = $this->getSetting('include_map');
     if ($include_map) {
-      $summary[] = $this->t('Dynamic map: @width x @height', ['@width' => $this->getSetting('iframe_width'), '@height' => $this->getSetting('iframe_height')]);
+      $summary[] = $this->t('Dynamic map: @width x @height', [
+        '@width' => $this->getSetting('iframe_width'),
+        '@height' => $this->getSetting('iframe_height'),
+      ]);
     }
+
     $include_static_map = $this->getSetting('include_static_map');
     if ($include_static_map) {
       $summary[] = $this->t('Static map: @width x @height, Scale: @static_scale', [
@@ -195,9 +202,12 @@ class SimpleGMapFormatter extends FormatterBase {
         '@static_scale' => $this->getSetting('static_scale'),
       ]);
     }
+
     $include_link = $this->getSetting('include_link');
     if ($include_link) {
-      $summary[] = $this->t('Map link: @link_text', ['@link_text' => $this->getSetting('link_text')]);
+      $summary[] = $this->t('Map link: @link_text', [
+        '@link_text' => $this->getSetting('link_text'),
+      ]);
     }
 
     if ($include_link || $include_map || $include_static_map) {
@@ -217,15 +227,10 @@ class SimpleGMapFormatter extends FormatterBase {
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
-
     $element = [];
     $settings = $this->getSettings();
 
-    $embed = (int) $settings['include_map'] ? TRUE : FALSE;
-    $static = (int) $settings['include_static_map'] ? TRUE : FALSE;
-    $link = (int) $settings['include_link'] ? TRUE : FALSE;
-    $text = (int) $settings['include_text'] ? TRUE : FALSE;
-
+    $include_text = $settings['include_text'];
     $zoom_level = (int) $settings['zoom_level'];
 
     // For some reason, static gmaps accepts a different value for map type.
@@ -249,16 +254,16 @@ class SimpleGMapFormatter extends FormatterBase {
     foreach ($items as $delta => $item) {
       $url_value = urlencode($item->value);
       $address_value = $item->value;
-      $address = $text ? $address_value : '';
+      $address = $include_text ? $address_value : '';
       $text_for_link = ($settings['link_text'] == 'use_address') ? $address_value : $settings['link_text'];
       $link_text = ['#plain_text' => $text_for_link];
 
       $element[$delta] = [
         '#theme' => 'simple_gmap_output',
-        '#include_map' => $embed,
-        '#include_static_map' => $static,
-        '#include_link' => $link,
-        '#include_text' => $text,
+        '#include_map' => $settings['include_map'],
+        '#include_static_map' => $settings['include_static_map'],
+        '#include_link' => $settings['include_link'],
+        '#include_text' => $settings['include_text'],
         '#width' => ['#plain_text' => $settings['iframe_width']],
         '#height' => ['#plain_text' => $settings['iframe_height']],
         '#static_scale' => (int) $settings['static_scale'],
@@ -272,6 +277,7 @@ class SimpleGMapFormatter extends FormatterBase {
         '#apikey' => $settings['apikey'],
       ];
     }
+
     return $element;
   }
 
