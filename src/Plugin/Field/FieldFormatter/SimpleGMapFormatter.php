@@ -32,6 +32,7 @@ class SimpleGMapFormatter extends FormatterBase {
       "include_text" => FALSE,
       "iframe_height" => "200",
       "iframe_width" => "200",
+      "iframe_title" => "",
       "static_scale" => 1,
       "zoom_level" => "14",
       "link_text" => "View larger map",
@@ -88,6 +89,12 @@ class SimpleGMapFormatter extends FormatterBase {
       '#default_value' => $this->getSetting('iframe_height'),
       '#description' => $this->t('You can set sizes in px or percent (ex: 600px or 100%). Note that static maps only accept sizes in pixels, without the suffix px (ex: 600).'),
       '#size' => 10,
+    ];
+    $elements['iframe_title'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Title of the iframe for embedded map'),
+      '#default_value' => $this->getSetting('iframe_title'),
+      '#description' => $this->t('The embedded map is in an iframe HTML tag, which should have a title attribute for screen readers (not shown on the page). Use [address] to insert the address text in the title.'),
     ];
     $elements['static_scale'] = [
       '#title' => $this->t('Load Retina sized static image'),
@@ -192,6 +199,9 @@ class SimpleGMapFormatter extends FormatterBase {
         '@width' => $this->getSetting('iframe_width'),
         '@height' => $this->getSetting('iframe_height'),
       ]);
+      $summary[] = $this->t('Title of the iframe: @title', [
+        '@title' => $this->getSetting('iframe_title'),
+      ]);
     }
 
     $include_static_map = $this->getSetting('include_static_map');
@@ -257,6 +267,10 @@ class SimpleGMapFormatter extends FormatterBase {
       $address = $include_text ? $address_value : '';
       $text_for_link = ($settings['link_text'] == 'use_address') ? $address_value : $settings['link_text'];
       $link_text = ['#plain_text' => $text_for_link];
+      $iframe_title = $settings['iframe_title'];
+      $iframe_title_value = [
+        '#plain_text' => str_replace('[address]', $address_value, $iframe_title),
+      ];
 
       $element[$delta] = [
         '#theme' => 'simple_gmap_output',
@@ -266,6 +280,7 @@ class SimpleGMapFormatter extends FormatterBase {
         '#include_text' => $settings['include_text'],
         '#width' => ['#plain_text' => $settings['iframe_width']],
         '#height' => ['#plain_text' => $settings['iframe_height']],
+        '#iframe_title' => $iframe_title_value,
         '#static_scale' => (int) $settings['static_scale'],
         '#url_suffix' => $url_value,
         '#zoom' => $zoom_level,
