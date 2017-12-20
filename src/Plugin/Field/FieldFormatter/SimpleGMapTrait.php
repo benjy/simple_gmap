@@ -5,6 +5,9 @@ namespace Drupal\simple_gmap\Plugin\Field\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
 
+/**
+ * Trait to share common functionality between Simple GMap formatters.
+ */
 trait SimpleGMapTrait {
 
   /**
@@ -12,20 +15,20 @@ trait SimpleGMapTrait {
    */
   public static function defaultSettings() {
     return [
-        "include_map" => TRUE,
-        "include_static_map" => FALSE,
-        "include_link" => FALSE,
-        "include_text" => FALSE,
-        "iframe_height" => "200",
-        "iframe_width" => "200",
-        "iframe_title" => "",
-        "static_scale" => 1,
-        "zoom_level" => "14",
-        "link_text" => "View larger map",
-        "map_type" => "m",
-        "langcode" => "en",
-        "apikey" => "",
-      ] + parent::defaultSettings();
+      "include_map" => TRUE,
+      "include_static_map" => FALSE,
+      "include_link" => FALSE,
+      "include_text" => FALSE,
+      "iframe_height" => "200",
+      "iframe_width" => "200",
+      "iframe_title" => "",
+      "static_scale" => 1,
+      "zoom_level" => "14",
+      "link_text" => "View larger map",
+      "map_type" => "m",
+      "langcode" => "en",
+      "apikey" => "",
+    ] + parent::defaultSettings();
   }
 
   /**

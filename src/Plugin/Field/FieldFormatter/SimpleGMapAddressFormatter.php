@@ -19,7 +19,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 class SimpleGMapAddressFormatter extends AddressDefaultFormatter {
 
   use SimpleGMapTrait {
-    viewElements as simpleGmailViewElements;
+    viewElements as simpleGmapViewElements;
   }
 
   /**
@@ -27,7 +27,7 @@ class SimpleGMapAddressFormatter extends AddressDefaultFormatter {
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = parent::viewElements($items, $langcode);
-    $mapElements = $this->simpleGmailViewElements($items, $langcode);
+    $mapElements = $this->simpleGmapViewElements($items, $langcode);
 
     foreach ($items as $delta => $item) {
       $elements[$delta]['#post_render'][] = [static::class, 'mapPostRender'];
