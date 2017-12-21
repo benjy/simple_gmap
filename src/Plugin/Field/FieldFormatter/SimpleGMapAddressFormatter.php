@@ -43,10 +43,10 @@ class SimpleGMapAddressFormatter extends AddressDefaultFormatter {
    * Post render callback.
    */
   public static function mapPostRender($content, $element) {
-    $addressString = str_replace("\n", ',', strip_tags($content));
+    $addressString = html_entity_decode(str_replace("\n", ',', strip_tags($content)), ENT_QUOTES);
     $map = $element['#map_elements'];
     $map['#address_text'] = $addressString;
-    $map['#url_suffix'] = $addressString;
+    $map['#url_suffix'] = urlencode($addressString);
     return \Drupal::service('renderer')->renderRoot($map);
   }
 
